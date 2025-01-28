@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UsersService} from "../services/users.service";
+import {ToggleStatusCountService} from "../services/toggleStatusCount.service";
 
 @Component({
   selector: 'app-active-users',
@@ -9,7 +10,9 @@ import {UsersService} from "../services/users.service";
 export class ActiveUsersComponent implements OnInit{
   public users :string[] = [];
 
-  constructor(private usersSvc : UsersService) {}
+  public count = 0;
+
+  constructor(private usersSvc : UsersService,private toggleCountSvc : ToggleStatusCountService) {}
 
   public ngOnInit() {
 
@@ -18,6 +21,8 @@ export class ActiveUsersComponent implements OnInit{
   }
 
   public onSetToInactive(id: number) {
+
+    this.toggleCountSvc.setCount();
 
     this.usersSvc.onSetToInactive(id);
 
